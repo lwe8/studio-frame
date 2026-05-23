@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="markdown.css" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <title>StudioFrame | docs Post</title>
+  </head>
+  <body>
+    <header class="header">
+      <nav>
+        <a href="index.html" class="nav_logo">StudioFrame</a>
+
+        <div class="nav_menu" id="nav-menu">
+          <ul class="nav_list">
+            <li class="nav_item">
+              <a href="index.html" class="nav_link">Home</a>
+            </li>
+            <li class="nav_item"><a href="#" class="nav_link">About</a></li>
+            <li class="nav_item"><a href="#" class="nav_link">Services</a></li>
+            <li class="nav_item"><a href="#" class="nav_link">Featured</a></li>
+            <li class="nav_item">
+              <a href="#" class="nav_link">Contact Me</a>
+            </li>
+          </ul>
+
+          <div class="nav_menu_tools">
+            <button
+              class="nav_theme nav_theme-mobile"
+              data-theme-toggle
+              type="button"
+              aria-label="Switch to dark mode"
+              title="Switch to dark mode"
+            >
+              <i class="ri-moon-line"></i>
+              <span>Dark mode</span>
+            </button>
+          </div>
+
+          <button
+            class="nav_close"
+            id="nav-close"
+            type="button"
+            aria-label="Close menu"
+          >
+            <i class="ri-close-line"></i>
+          </button>
+        </div>
+
+        <div class="nav_actions">
+          <button
+            class="nav_theme"
+            data-theme-toggle
+            type="button"
+            aria-label="Switch to dark mode"
+            title="Switch to dark mode"
+          >
+            <i class="ri-moon-line"></i>
+          </button>
+
+          <button
+            class="nav_search"
+            id="search-btn"
+            type="button"
+            aria-label="Open search"
+          >
+            <i class="ri-search-line"></i>
+          </button>
+
+          <button
+            class="nav_toggle"
+            id="nav-toggle"
+            type="button"
+            aria-label="Open menu"
+          >
+            <i class="ri-menu-3-line"></i>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <div class="search" id="search">
+      <form action="" class="search_form">
+        <i class="ri-search-line search_icon"></i>
+        <input
+          type="search"
+          placeholder="Search posts, tags, or notes"
+          class="search_input"
+          name="search-input"
+        />
+      </form>
+
+      <button
+        class="search_close"
+        id="search-close"
+        type="button"
+        aria-label="Close search"
+      >
+        <i class="ri-close-line"></i>
+      </button>
+    </div>
+    <!-- docs Main -->
+    <div class="docs_main">
+      <aside class="docs_toc_mobile" aria-labelledby="docs-toc-mobile-title">
+        <details class="docs_toc_card docs_toc_menu">
+          <summary class="docs_toc_summary">
+            <h2 class="docs_toc_title" id="docs-toc-mobile-title">
+              On this page
+            </h2>
+            <i class="ri-arrow-down-s-line" aria-hidden="true"></i>
+          </summary>
+          <nav
+            class="docs_toc_nav"
+            aria-label="Mobile table of contents"
+            data-docs-toc-mobile
+          ></nav>
+        </details>
+      </aside>
+
+      <!-- <p class="docs_post_meta"><i class="ri-calendar-line"></i> May,24 2026</p> -->
+
+      <div class="docs_layout">
+        <article class="markdown-body" data-docs-content>
+          <h2 id="start-writing-here">Start writing here</h2>
+          <p>
+            Use this first paragraph as your article introduction. Summarize the
+            topic, explain why it matters, and set the tone for the rest of the
+            post.
+          </p>
+          <p>
+            If you do not have final content yet, keep these placeholder
+            paragraphs in place until you are ready to swap them with your
+            actual Markdown output.
+          </p>
+
+          <h3 id="suggested-section-heading">Suggested section heading</h3>
+          <ul>
+            <li>Add a key point or supporting argument here.</li>
+            <li>Use bullets when the content is easier to scan as a list.</li>
+            <li>Keep each line short and specific.</li>
+            <li>Replace every placeholder item before publishing.</li>
+          </ul>
+
+          <blockquote>
+            <p>
+              Add a memorable quote, pull-out insight, or summary line here if
+              the article needs a visual pause between sections.
+            </p>
+          </blockquote>
+
+          <h3 id="example-code-block">Example code block</h3>
+          <p>
+            This area can hold code samples, configuration snippets, or any
+            other preformatted content that comes from your Markdown source.
+          </p>
+
+          <pre class="language-js"><code class="language-js">const article = {
+    title: "Your article title",
+    published: "2026-05-23",
+    tags: ["tag-one", "tag-two", "tag-three"]
+    };</code></pre>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Section</th>
+                <th>What to add</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>Title</code></td>
+                <td>Your docs post headline.</td>
+              </tr>
+              <tr>
+                <td><code>Excerpt</code></td>
+                <td>A short summary shown under the title.</td>
+              </tr>
+              <tr>
+                <td><code>Body</code></td>
+                <td>Your Markdown-rendered article content.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3 id="before-publishing">Before publishing</h3>
+          <ol>
+            <li>Replace the title, summary, date, and tags.</li>
+            <li>Paste in the final Markdown-rendered article body.</li>
+            <li>Remove any sections you do not need.</li>
+            <li>Check the page once on mobile and once on desktop.</li>
+          </ol>
+        </article>
+
+        <aside class="docs_toc" aria-labelledby="docs-toc-title">
+          <div class="docs_toc_card">
+            <h2 class="docs_toc_title" id="docs-toc-title">On this page</h2>
+            <nav
+              class="docs_toc_nav"
+              aria-label="Desktop table of contents"
+              data-docs-toc-desktop
+            ></nav>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <!-- Footer -->
+    <footer class="site_footer">
+      <div class="footer_meta">
+        <p>© 2026 StudioFrame. Built for responsive product experiences.</p>
+        <a href="#">Privacy policy</a>
+      </div>
+    </footer>
+
+    <script src="main.js"></script>
+  </body>
+</html>
