@@ -107,14 +107,61 @@
 (() => {
    /*=============== docs TOC ===============*/
    const article = document.querySelector("[data-docs-content]"),
+      docsPage = document.body.dataset.docsPage,
+      docsPanelToggles = document.querySelectorAll("[data-docs-panel-toggle]"),
+      docsMobileBar = document.querySelector(".docs_mobile_bar"),
+      mobileSidebar = document.querySelector("[data-docs-sidebar-mobile]"),
+      desktopSidebar = document.querySelector("[data-docs-sidebar-desktop]"),
       mobileToc = document.querySelector("[data-docs-toc-mobile]"),
       desktopToc = document.querySelector("[data-docs-toc-desktop]"),
+      mobileSidebarMenu = document.querySelector(
+         ".docs_sidebar_mobile .docs_sidebar_menu"
+      ),
       mobileTocMenu = document.querySelector(".docs_toc_mobile .docs_toc_menu"),
-      pageHeader = document.querySelector(".header");
+      pageHeader = document.querySelector(".header"),
+      mobilePanels = {
+         sidebar: mobileSidebar?.closest(".docs_sidebar_mobile"),
+         toc: mobileToc?.closest(".docs_toc_mobile"),
+      };
 
-   if (!article || !mobileToc || !desktopToc) {
+   if (
+      !article ||
+      !docsPage ||
+      !mobileSidebar ||
+      !desktopSidebar ||
+      !mobileToc ||
+      !desktopToc
+   ) {
       return;
    }
+
+   const docsNavigation = [
+      {
+         label: "Guide",
+         items: [
+            {
+               page: "docs-overview",
+               title: "Overview",
+               href: "docs.html",
+            },
+            {
+               page: "docs-getting-started",
+               title: "Getting Started",
+               href: "docs-getting-started.html",
+            },
+         ],
+      },
+      {
+         label: "Reference",
+         items: [
+            {
+               page: "docs-reference",
+               title: "Theme & Layout",
+               href: "docs-reference.html",
+            },
+         ],
+      },
+   ];
 
    const slugify = (value) =>
       value
@@ -142,9 +189,51 @@
       return;
    }
 
-   const desktopTocLinks = [],
-      setActiveDesktopLink = (id) => {
-         desktopTocLinks.forEach((link) => {
+   const sectionNavigationLinks = [],
+      closeMobilePanels = () => {
+         Object.values(mobilePanels).forEach((panel) => {
+            panel?.classList.remove("is-open");
+         });
+
+         docsPanelToggles.forEach((toggle) => {
+            toggle.setAttribute("aria-expanded", "false");
+            toggle.classList.remove("is-active");
+         });
+      },
+      toggleMobilePanel = (panelName) => {
+         const targetPanel = mobilePanels[panelName];
+
+         if (!targetPanel) {
+            return;
+         }
+
+         const shouldOpen = !targetPanel.classList.contains("is-open");
+
+         closeMobilePanels();
+
+         if (!shouldOpen) {
+            return;
+         }
+
+         targetPanel.classList.add("is-open");
+
+         if (panelName === "sidebar" && mobileSidebarMenu) {
+            mobileSidebarMenu.open = true;
+         }
+
+         if (panelName === "toc" && mobileTocMenu) {
+            mobileTocMenu.open = true;
+         }
+
+         docsPanelToggles.forEach((toggle) => {
+            const isTarget = toggle.dataset.docsPanelToggle === panelName;
+
+            toggle.classList.toggle("is-active", isTarget);
+            toggle.setAttribute("aria-expanded", isTarget ? "true" : "false");
+         });
+      },
+      setActiveSectionLinkState = (id) => {
+         sectionNavigationLinks.forEach((link) => {
             const isActive = link.getAttribute("href") === `#${id}`;
 
             link.classList.toggle("is-active", isActive);
@@ -165,38 +254,145 @@
             behavior: "smooth",
          });
       },
-      buildTocLinks = () =>
-         headings.map((heading) => {
-            const link = document.createElement("a");
+      createSectionLink = (heading, classNames = []) => {
+         const link = document.createElement("a");
 
-            link.href = `#${heading.id}`;
-            link.textContent = heading.textContent.trim();
+         link.href = `#${heading.id}`;
+         link.textContent = heading.textContent.trim();
+         link.classList.add(...classNames);
+         sectionNavigationLinks.push(link);
 
-            if (heading.tagName === "H3") {
-               link.classList.add("is-child");
+         link.addEventListener("click", (event) => {
+            event.preventDefault();
+            setActiveSectionLinkState(heading.id);
+
+            if (mobileSidebarMenu) {
+               mobileSidebarMenu.open = false;
             }
 
-            link.addEventListener("click", (event) => {
-               event.preventDefault();
-               setActiveDesktopLink(heading.id);
+            if (mobileTocMenu) {
+               mobileTocMenu.open = false;
+            }
 
-               if (mobileTocMenu) {
-                  mobileTocMenu.open = false;
-               }
+            closeMobilePanels();
 
-               history.replaceState(null, "", `#${heading.id}`);
-               scrollToHeading(heading);
-            });
-
-            return link;
+            history.replaceState(null, "", `#${heading.id}`);
+            scrollToHeading(heading);
          });
 
+         return link;
+      },
+      buildTocLinks = () =>
+         headings.map((heading) =>
+            createSectionLink(
+               heading,
+               heading.tagName === "H3" ? ["is-child"] : []
+            )
+         ),
+      buildSidebarNavigation = (container) => {
+         const fragment = document.createDocumentFragment();
+
+         docsNavigation.forEach((group) => {
+            const section = document.createElement("details"),
+               sectionSummary = document.createElement("summary"),
+               sectionTitle = document.createElement("span"),
+               sectionIcon = document.createElement("i"),
+               pageList = document.createElement("div");
+
+            const hasCurrentPage = group.items.some((item) => item.page === docsPage);
+
+            section.className = "docs_sidebar_group";
+            section.open = true;
+            sectionSummary.className = "docs_sidebar_group_summary";
+            sectionTitle.className = "docs_sidebar_group_title";
+            sectionTitle.textContent = group.label;
+            sectionIcon.className = "ri-arrow-right-s-line";
+            sectionIcon.setAttribute("aria-hidden", "true");
+            pageList.className = "docs_sidebar_page_list";
+
+            if (hasCurrentPage) {
+               section.classList.add("is-current-group");
+            }
+
+            sectionSummary.append(sectionTitle, sectionIcon);
+
+            group.items.forEach((item) => {
+               const pageLink = document.createElement("a");
+
+               pageLink.className = "docs_sidebar_link docs_sidebar_page_link";
+               pageLink.href = item.href;
+               pageLink.textContent = item.title;
+
+               if (item.page === docsPage) {
+                  pageLink.classList.add("is-active", "is-current-page");
+                  pageLink.setAttribute("aria-current", "page");
+
+                  pageLink.addEventListener("click", (event) => {
+                     event.preventDefault();
+
+                     if (mobileSidebarMenu) {
+                        mobileSidebarMenu.open = false;
+                     }
+
+                     closeMobilePanels();
+
+                     history.replaceState(null, "", item.href);
+                     window.scrollTo({
+                        top: 0,
+                        behavior: "smooth",
+                     });
+                  });
+               }
+
+               pageList.append(pageLink);
+            });
+
+            section.append(sectionSummary, pageList);
+            fragment.append(section);
+         });
+
+         container.replaceChildren(fragment);
+      },
+      initialHeading =
+         headings.find((heading) => `#${heading.id}` === window.location.hash) ||
+         headings[0];
+
+   buildSidebarNavigation(mobileSidebar);
+   buildSidebarNavigation(desktopSidebar);
    mobileToc.replaceChildren(...buildTocLinks());
    desktopToc.replaceChildren(...buildTocLinks());
 
-   desktopTocLinks.push(...desktopToc.querySelectorAll("a"));
+   docsPanelToggles.forEach((toggle) => {
+      toggle.addEventListener("click", () => {
+         toggleMobilePanel(toggle.dataset.docsPanelToggle);
+      });
+   });
 
-   setActiveDesktopLink(headings[0].id);
+   document.addEventListener("click", (event) => {
+      const target = event.target;
+
+      if (!(target instanceof Element)) {
+         return;
+      }
+
+      if (
+         target.closest(".docs_mobile_bar") ||
+         target.closest(".docs_sidebar_mobile") ||
+         target.closest(".docs_toc_mobile")
+      ) {
+         return;
+      }
+
+      closeMobilePanels();
+   });
+
+   window.addEventListener("resize", () => {
+      if (window.innerWidth >= 1023) {
+         closeMobilePanels();
+      }
+   });
+
+   setActiveSectionLinkState(initialHeading.id);
 
    const tocObserver = new IntersectionObserver(
       (entries) => {
@@ -208,7 +404,7 @@
             )[0];
 
          if (visibleHeading) {
-            setActiveDesktopLink(visibleHeading.target.id);
+            setActiveSectionLinkState(visibleHeading.target.id);
          }
       },
       {

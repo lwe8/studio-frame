@@ -11,9 +11,9 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="markdown.css" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <title>StudioFrame | docs Post</title>
+    <title>StudioFrame | Theme & Layout</title>
   </head>
-  <body data-docs-page="docs-overview">
+  <body data-docs-page="docs-reference">
     <header class="header">
       <nav>
         <a href="index.html" class="nav_logo">StudioFrame</a>
@@ -131,7 +131,6 @@
       </button>
     </div>
 
-    <!-- docs Main -->
     <div class="docs_main">
       <aside
         class="docs_sidebar_mobile"
@@ -176,8 +175,6 @@
         </details>
       </aside>
 
-      <!-- <p class="docs_post_meta"><i class="ri-calendar-line"></i> May,24 2026</p> -->
-
       <div class="docs_layout">
         <aside class="docs_sidebar" aria-labelledby="docs-sidebar-title">
           <div class="docs_sidebar_card">
@@ -192,75 +189,44 @@
         </aside>
 
         <article class="markdown-body" data-docs-content>
-          <h2 id="start-writing-here">Start writing here</h2>
+          <h2 id="sidebar-structure">Sidebar structure</h2>
           <p>
-            Use this first paragraph as your article introduction. Summarize the
-            topic, explain why it matters, and set the tone for the rest of the
-            post.
-          </p>
-          <p>
-            If you do not have final content yet, keep these placeholder
-            paragraphs in place until you are ready to swap them with your
-            actual Markdown output.
+            The left rail is now driven by a shared configuration in the main
+            script. Each group defines a label and a set of pages, which keeps
+            navigation stable even when the content headings change.
           </p>
 
-          <h3 id="suggested-section-heading">Suggested section heading</h3>
+          <h3 id="group-labels">Group labels</h3>
+          <p>
+            Use short, durable labels such as Guide, Reference, or API. These
+            should describe clusters of pages rather than temporary article
+            topics.
+          </p>
+
+          <h2 id="layout-breakpoints">Layout breakpoints</h2>
+          <p>
+            The docs shell now behaves in three layers: a stacked mobile layout,
+            a two-column desktop layout with the left sidebar, and a
+            three-column wide layout that restores the right-hand table of
+            contents.
+          </p>
+
+          <h3 id="desktop-behavior">Desktop behavior</h3>
           <ul>
-            <li>Add a key point or supporting argument here.</li>
-            <li>Use bullets when the content is easier to scan as a list.</li>
-            <li>Keep each line short and specific.</li>
-            <li>Replace every placeholder item before publishing.</li>
+            <li>The left sidebar becomes sticky at large breakpoints.</li>
+            <li>The right TOC returns only on wider screens.</li>
+            <li>
+              The active page remains highlighted while section links track
+              scroll.
+            </li>
           </ul>
 
-          <blockquote>
-            <p>
-              Add a memorable quote, pull-out insight, or summary line here if
-              the article needs a visual pause between sections.
-            </p>
-          </blockquote>
-
-          <h3 id="example-code-block">Example code block</h3>
+          <h2 id="theme-hooks">Theme hooks</h2>
           <p>
-            This area can hold code samples, configuration snippets, or any
-            other preformatted content that comes from your Markdown source.
+            The sidebar and TOC both inherit the existing color tokens, which
+            keeps light and dark mode behavior centralized in the same CSS
+            custom properties already used across the site.
           </p>
-
-          <pre class="language-js"><code class="language-js">const article = {
-    title: "Your article title",
-    published: "2026-05-23",
-    tags: ["tag-one", "tag-two", "tag-three"]
-    };</code></pre>
-
-          <table>
-            <thead>
-              <tr>
-                <th>Section</th>
-                <th>What to add</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><code>Title</code></td>
-                <td>Your docs post headline.</td>
-              </tr>
-              <tr>
-                <td><code>Excerpt</code></td>
-                <td>A short summary shown under the title.</td>
-              </tr>
-              <tr>
-                <td><code>Body</code></td>
-                <td>Your Markdown-rendered article content.</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <h3 id="before-publishing">Before publishing</h3>
-          <ol>
-            <li>Replace the title, summary, date, and tags.</li>
-            <li>Paste in the final Markdown-rendered article body.</li>
-            <li>Remove any sections you do not need.</li>
-            <li>Check the page once on mobile and once on desktop.</li>
-          </ol>
         </article>
 
         <aside class="docs_toc" aria-labelledby="docs-toc-title">
@@ -275,10 +241,10 @@
         </aside>
       </div>
     </div>
-    <!-- Footer -->
+
     <footer class="site_footer">
       <div class="footer_meta">
-        <p>© 2026 StudioFrame.</p>
+        <p>© 2026 StudioFrame. Built for responsive product experiences.</p>
         <a href="#">Privacy policy</a>
       </div>
     </footer>

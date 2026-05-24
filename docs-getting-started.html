@@ -11,9 +11,9 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="markdown.css" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <title>StudioFrame | docs Post</title>
+    <title>StudioFrame | Getting Started</title>
   </head>
-  <body data-docs-page="docs-overview">
+  <body data-docs-page="docs-getting-started">
     <header class="header">
       <nav>
         <a href="index.html" class="nav_logo">StudioFrame</a>
@@ -131,7 +131,6 @@
       </button>
     </div>
 
-    <!-- docs Main -->
     <div class="docs_main">
       <aside
         class="docs_sidebar_mobile"
@@ -176,8 +175,6 @@
         </details>
       </aside>
 
-      <!-- <p class="docs_post_meta"><i class="ri-calendar-line"></i> May,24 2026</p> -->
-
       <div class="docs_layout">
         <aside class="docs_sidebar" aria-labelledby="docs-sidebar-title">
           <div class="docs_sidebar_card">
@@ -192,75 +189,51 @@
         </aside>
 
         <article class="markdown-body" data-docs-content>
-          <h2 id="start-writing-here">Start writing here</h2>
+          <h2 id="set-up-the-workspace">Set up the workspace</h2>
           <p>
-            Use this first paragraph as your article introduction. Summarize the
-            topic, explain why it matters, and set the tone for the rest of the
-            post.
+            Start by keeping the docs shell consistent across every page. Reuse
+            the same header, footer, search overlay, and docs layout so the
+            sidebar can move between pages without any conditional markup.
           </p>
           <p>
-            If you do not have final content yet, keep these placeholder
-            paragraphs in place until you are ready to swap them with your
-            actual Markdown output.
+            Each docs page only needs one extra signal: a
+            <code>data-docs-page</code>
+            identifier on the body so the shared sidebar knows which entry is
+            active.
           </p>
 
-          <h3 id="suggested-section-heading">Suggested section heading</h3>
+          <h3 id="page-metadata">Page metadata</h3>
           <ul>
-            <li>Add a key point or supporting argument here.</li>
-            <li>Use bullets when the content is easier to scan as a list.</li>
-            <li>Keep each line short and specific.</li>
-            <li>Replace every placeholder item before publishing.</li>
+            <li>Add a stable page key to the body element.</li>
+            <li>
+              Keep the sidebar and TOC containers present on every docs page.
+            </li>
+            <li>
+              Let the shared script handle active links and heading anchors.
+            </li>
           </ul>
 
-          <blockquote>
-            <p>
-              Add a memorable quote, pull-out insight, or summary line here if
-              the article needs a visual pause between sections.
-            </p>
-          </blockquote>
-
-          <h3 id="example-code-block">Example code block</h3>
+          <h2 id="write-the-content">Write the content</h2>
           <p>
-            This area can hold code samples, configuration snippets, or any
-            other preformatted content that comes from your Markdown source.
+            The left sidebar now represents documentation structure, not just a
+            scan of the current page headings. That means page titles and group
+            labels stay consistent while the article body stays free to evolve.
           </p>
 
-          <pre class="language-js"><code class="language-js">const article = {
-    title: "Your article title",
-    published: "2026-05-23",
-    tags: ["tag-one", "tag-two", "tag-three"]
-    };</code></pre>
-
-          <table>
-            <thead>
-              <tr>
-                <th>Section</th>
-                <th>What to add</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><code>Title</code></td>
-                <td>Your docs post headline.</td>
-              </tr>
-              <tr>
-                <td><code>Excerpt</code></td>
-                <td>A short summary shown under the title.</td>
-              </tr>
-              <tr>
-                <td><code>Body</code></td>
-                <td>Your Markdown-rendered article content.</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <h3 id="before-publishing">Before publishing</h3>
+          <h3 id="content-guidelines">Content guidelines</h3>
           <ol>
-            <li>Replace the title, summary, date, and tags.</li>
-            <li>Paste in the final Markdown-rendered article body.</li>
-            <li>Remove any sections you do not need.</li>
-            <li>Check the page once on mobile and once on desktop.</li>
+            <li>Use clear H2 sections for major ideas.</li>
+            <li>Use H3 headings for subtopics that deserve anchor links.</li>
+            <li>Keep titles short so the sidebar remains readable.</li>
           </ol>
+
+          <h2 id="publish-check">Publish check</h2>
+          <p>
+            Before publishing, open the page once on mobile and once on desktop.
+            Confirm the left sidebar highlights the current page, the nested
+            section links follow scroll position, and the right TOC only appears
+            on larger screens.
+          </p>
         </article>
 
         <aside class="docs_toc" aria-labelledby="docs-toc-title">
@@ -275,10 +248,10 @@
         </aside>
       </div>
     </div>
-    <!-- Footer -->
+
     <footer class="site_footer">
       <div class="footer_meta">
-        <p>© 2026 StudioFrame.</p>
+        <p>© 2026 StudioFrame. Built for responsive product experiences.</p>
         <a href="#">Privacy policy</a>
       </div>
     </footer>
